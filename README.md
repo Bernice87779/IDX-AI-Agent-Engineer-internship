@@ -1,2 +1,2 @@
-# IDX-nlp-internship
-NLP projects and analysis | IDX Exchange NLP Internship
+# IDX-AI-Agent-Engineer-internship
+
