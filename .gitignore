@@ -225,3 +225,5 @@ node_modules/
 
 # OS
 .DS_Store
+
+week4-conversational-agent/sessions-store.json

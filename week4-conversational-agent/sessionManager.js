@@ -1,12 +1,32 @@
 // Week 4 deliverable: multi-turn conversational session memory.
-// Transforms the single-turn query tool from Week 3 into a stateful,
-// progressively-refined conversation per user.
+// Persisted to a JSON file instead of an in-memory Map, because each
+// WhatsApp message triggers a brand-new `node` process via OpenClaw's
+// exec tool — an in-memory Map would reset on every single message.
+// This mirrors what the real "move state to Redis/a database" advice
+// would look like in production, just using a plain file for this program.
 
-const sessions = new Map();
+const fs = require("fs");
+const path = require("path");
+
+const STORE_PATH = path.join(__dirname, "sessions-store.json");
+
+function loadStore() {
+  try {
+    const raw = fs.readFileSync(STORE_PATH, "utf8");
+    return JSON.parse(raw);
+  } catch (err) {
+    return {};
+  }
+}
+
+function saveStore(store) {
+  fs.writeFileSync(STORE_PATH, JSON.stringify(store, null, 2));
+}
 
 function getSession(userId) {
-  if (!sessions.has(userId)) {
-    sessions.set(userId, {
+  const store = loadStore();
+  if (!store[userId]) {
+    store[userId] = {
       city: null,
       maxPrice: null,
       beds: null,
@@ -15,29 +35,33 @@ function getSession(userId) {
       pool: null,
       lastResults: null,
       conversationStep: 0,
-    });
+    };
+    saveStore(store);
   }
-  return sessions.get(userId);
+  return store[userId];
 }
 
 function updateSession(userId, updates) {
-  const session = getSession(userId);
-  const updated = { ...session, ...updates };
-  sessions.set(userId, updated);
+  const store = loadStore();
+  const existing = store[userId] || {};
+  const updated = { ...existing, ...updates };
+  store[userId] = updated;
+  saveStore(store);
   return updated;
 }
 
 function clearSession(userId) {
-  sessions.delete(userId);
+  const store = loadStore();
+  delete store[userId];
+  saveStore(store);
 }
 
-// Decide what to ask next based on what's still missing.
 function getNextQuestion(session) {
   if (!session.city) return "What city are you interested in?";
   if (!session.maxPrice) return "What is your budget?";
   if (!session.type) return "Any preference — condo, townhome, or single family?";
   if (!session.beds) return "How many bedrooms minimum?";
-  return null; // all key fields collected, ready to search
+  return null;
 }
 
 module.exports = { getSession, updateSession, clearSession, getNextQuestion };
