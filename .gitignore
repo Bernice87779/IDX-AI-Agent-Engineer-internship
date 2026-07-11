@@ -216,3 +216,12 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Node.js
+node_modules/
+
+# SQL data dumps - too large for GitHub
+*.sql
+
+# OS
+.DS_Store
