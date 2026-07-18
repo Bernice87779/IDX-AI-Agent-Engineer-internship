@@ -10,7 +10,7 @@ search, embeddings, and RAG.
 - [x] Week 1 — OpenClaw architecture fundamentals
 - [x] Week 2 — Natural language property query parser
 - [x] Week 3 — MySQL query layer (rets_property + california_sold)
-- [ ] Week 4 — Conversational multi-turn agent
+- [x] Week 4 — Conversational multi-turn agent
 - [ ] Week 5 — Market statistics agent
 - [ ] Week 6 — Embeddings & vector search
 - [ ] Week 7 — Recommendation engine
