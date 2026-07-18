@@ -57,10 +57,10 @@ function clearSession(userId) {
 }
 
 function getNextQuestion(session) {
-  if (!session.city) return "What city are you interested in?";
-  if (!session.maxPrice) return "What is your budget?";
-  if (!session.type) return "Any preference — condo, townhome, or single family?";
-  if (!session.beds) return "How many bedrooms minimum?";
+  if (!session.city) return { question: "What city are you interested in?", field: "city" };
+  if (!session.maxPrice) return { question: "What is your budget?", field: "maxPrice" };
+  if (!session.type) return { question: "Any preference — condo, townhome, or single family?", field: "type" };
+  if (!session.beds) return { question: "How many bedrooms minimum?", field: "beds" };
   return null;
 }
 
