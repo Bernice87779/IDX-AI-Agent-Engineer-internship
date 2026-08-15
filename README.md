@@ -11,7 +11,7 @@ search, embeddings, and RAG.
 - [x] Week 2 — Natural language property query parser
 - [x] Week 3 — MySQL query layer (rets_property + california_sold)
 - [x] Week 4 — Conversational multi-turn agent
-- [ ] Week 5 — Market statistics agent
+- [x] Week 5 — Market statistics agent
 - [ ] Week 6 — Embeddings & vector search
 - [ ] Week 7 — Recommendation engine
 - [ ] Week 8 — RAG pipeline
